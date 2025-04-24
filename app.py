@@ -1,6 +1,11 @@
 from flask import Flask, jsonify, request
 from pytube import YouTube, Search
+import logging
 
+# Configurar logging para producción
+logging.basicConfig(level=logging.INFO)
+
+# Crear la app Flask
 app = Flask(__name__)
 
 # Endpoint para buscar videos en YouTube
@@ -10,9 +15,13 @@ def search_videos():
     if not query:
         return jsonify({"error": "No query provided"}), 400
 
-    search_results = Search(query).results
-    video_list = []
+    try:
+        search_results = Search(query).results
+    except Exception as e:
+        app.logger.error(f"Error while searching: {e}")
+        return jsonify({"error": "Error while searching: " + str(e)}), 500
 
+    video_list = []
     for video in search_results:
         video_data = {
             "title": video.title,
@@ -59,6 +68,7 @@ def get_streams():
 
         return jsonify(stream_options)
     except Exception as e:
+        app.logger.error(f"Error while getting streams: {e}")
         return jsonify({"error": str(e)}), 500
 
 # Endpoint para descargar video o audio según la calidad seleccionada
@@ -80,9 +90,11 @@ def download_video():
         stream.download()  # Descarga el archivo en el directorio actual
         return jsonify({"message": "Download successful"}), 200
     except Exception as e:
+        app.logger.error(f"Error while downloading: {e}")
         return jsonify({"error": str(e)}), 500
 
+# Ejecutar la aplicación
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=port, debug=False)
