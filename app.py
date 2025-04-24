@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+ffrom flask import Flask, jsonify, request
 from pytube import YouTube, Search
 import logging
 
@@ -11,7 +11,7 @@ app = Flask(__name__)
 # Endpoint para buscar videos en YouTube
 @app.route('/search', methods=['GET'])
 def search_videos():
-    query = request.args.get('query', '')
+    query = request.args.get('q', '')  # Cambié 'query' por 'q' para coincidir con el frontend
     if not query:
         return jsonify({"error": "No query provided"}), 400
 
