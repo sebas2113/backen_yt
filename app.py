@@ -14,7 +14,7 @@ def get_video_formats(url):
     ydl_opts = {
         'format': 'bestaudio/best',
         'quiet': True,
-        'cookiesfrombrowser': ('chrome',),  # Intenta usar cookies automáticamente si están disponibles
+        'cookiefile': 'youtube_cookies.txt'  # Usamos cookies manuales para evitar bloqueos
     }
 
     try:
@@ -38,6 +38,7 @@ def search():
     ydl_opts = {
         'quiet': True,
         'noplaylist': True,
+        'cookiefile': 'youtube_cookies.txt'
     }
 
     try:
@@ -51,9 +52,11 @@ def search():
 
 
 # Ruta para obtener formatos de un video
-@app.route('/formats', methods=['GET'])
+@app.route('/formats', methods=['POST'])
 def formats():
-    url = request.args.get('url')
+    data = request.get_json()
+    url = data.get('url')
+
     if not url:
         return jsonify({"error": "No URL provided"}), 400
 
@@ -88,7 +91,7 @@ def download():
             'preferredquality': '192',
         }],
         'noplaylist': True,
-        'cookiesfrombrowser': ('chrome',),  # Intenta con cookies de Chrome (opcional)
+        'cookiefile': 'youtube_cookies.txt'
     }
 
     try:
