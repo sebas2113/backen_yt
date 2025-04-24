@@ -1,112 +1,86 @@
 from flask import Flask, jsonify, request
-import yt_dlp
-
-from flask_cors import CORS
+from pytube import YouTube, Search
 
 app = Flask(__name__)
-CORS(app) 
-# Ruta principal para confirmar que el backend funciona
-@app.route('/')
-def index():
-    return jsonify({"message": "Backend YouTube Downloader funcionando 🚀"}), 200
 
-
-# Función para obtener formatos de un video de YouTube
-def get_video_formats(url):
-    ydl_opts = {
-        'format': 'bestaudio/best',
-        'quiet': True,
-        'cookiefile': 'cookies.txt'  # Usamos cookies manuales para evitar bloqueos
-    }
-
-    try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info_dict = ydl.extract_info(url, download=False)
-            formats = info_dict.get('formats', [])
-            audio_formats = [f for f in formats if f.get('acodec')]
-
-            return audio_formats, info_dict.get('title', 'Sin título')
-    except Exception as e:
-        raise e
-
-
-# Ruta para buscar videos por nombre
+# Endpoint para buscar videos en YouTube
 @app.route('/search', methods=['GET'])
-def search():
-    query = request.args.get('query')
+def search_videos():
+    query = request.args.get('query', '')
     if not query:
         return jsonify({"error": "No query provided"}), 400
 
-    ydl_opts = {
-        'quiet': True,
-        'noplaylist': True,
-        'cookiefile': 'cookies.txt'
-    }
+    search_results = Search(query).results
+    video_list = []
 
-    try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            result = ydl.extract_info(f"ytsearch5:{query}", download=False)
-            videos = result.get('entries', [])
-            video_list = [{"id": v['id'], "title": v['title'], "url": f"https://www.youtube.com/watch?v={v['id']}"} for v in videos]
-            return jsonify(video_list), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    for video in search_results:
+        video_data = {
+            "title": video.title,
+            "url": video.watch_url,
+            "thumbnail": video.thumbnail_url,
+            "length": video.length,
+        }
+        video_list.append(video_data)
 
+    return jsonify(video_list)
 
-# Ruta para obtener formatos de un video
-@app.route('/formats', methods=['POST'])
-def formats():
-    data = request.get_json()
-    url = data.get('url')
-
-    if not url:
+# Endpoint para obtener las opciones de calidad del video (video y audio)
+@app.route('/streams', methods=['GET'])
+def get_streams():
+    video_url = request.args.get('url', '')
+    if not video_url:
         return jsonify({"error": "No URL provided"}), 400
 
     try:
-        audio_formats, title = get_video_formats(url)
-        formats_list = [{
-            "format_note": f.get("format_note"),
-            "abr": f.get("abr"),
-            "ext": f.get("ext"),
-            "url": f.get("url")
-        } for f in audio_formats]
+        yt = YouTube(video_url)
+        streams = yt.streams
+        stream_options = []
 
-        return jsonify({"title": title, "formats": formats_list}), 200
+        # Agregar opciones de video con audio (progressive)
+        for stream in streams.filter(progressive=True):  # Video + audio
+            stream_options.append({
+                "itag": stream.itag,
+                "type": "video",
+                "quality": stream.resolution,
+                "audio_codec": stream.audio_codec if stream.audio_codec else None,
+                "video_codec": stream.video_codec,
+                "url": stream.url
+            })
+
+        # Agregar opciones solo de audio
+        for stream in streams.filter(only_audio=True):  # Solo audio
+            stream_options.append({
+                "itag": stream.itag,
+                "type": "audio",
+                "quality": stream.abr,  # Bitrate del audio
+                "audio_codec": stream.audio_codec,
+                "url": stream.url
+            })
+
+        return jsonify(stream_options)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-# Ruta para descargar el video/audio
+# Endpoint para descargar video o audio según la calidad seleccionada
 @app.route('/download', methods=['GET'])
-def download():
-    url = request.args.get('url')
-    if not url:
-        return jsonify({"error": "No URL provided"}), 400
-
-    ydl_opts = {
-        'format': 'bestaudio',
-        'quiet': False,
-        'outtmpl': f'/tmp/%(title)s.%(ext)s',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
-        'noplaylist': True,
-        'cookiefile': 'cookies.txt'
-    }
+def download_video():
+    video_url = request.args.get('url', '')
+    itag = request.args.get('itag', '')
+    if not video_url or not itag:
+        return jsonify({"error": "No URL or ITAG provided"}), 400
 
     try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
-        return jsonify({"message": "Download completed successfully"}), 200
+        yt = YouTube(video_url)
+        stream = yt.streams.get_by_itag(itag)
+
+        if not stream:
+            return jsonify({"error": "Stream with given ITAG not found"}), 404
+
+        # Descarga el video o audio según el ITAG proporcionado
+        stream.download()  # Descarga el archivo en el directorio actual
+        return jsonify({"message": "Download successful"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-# actualizado
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=5000)
-
-
-   
+    app.run(debug=True)
