@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 import yt_dlp
 
+from flask_cors import CORS
+
 app = Flask(__name__)
 CORS(app) 
 # Ruta principal para confirmar que el backend funciona
