@@ -14,7 +14,7 @@ def get_video_formats(url):
     ydl_opts = {
         'format': 'bestaudio/best',
         'quiet': True,
-        'cookiefile': 'youtube_cookies.txt'  # Usamos cookies manuales para evitar bloqueos
+        'cookiefile': 'cookies.txt'  # Usamos cookies manuales para evitar bloqueos
     }
 
     try:
@@ -38,7 +38,7 @@ def search():
     ydl_opts = {
         'quiet': True,
         'noplaylist': True,
-        'cookiefile': 'youtube_cookies.txt'
+        'cookiefile': 'cookies.txt'
     }
 
     try:
@@ -91,7 +91,7 @@ def download():
             'preferredquality': '192',
         }],
         'noplaylist': True,
-        'cookiefile': 'youtube_cookies.txt'
+        'cookiefile': 'cookies.txt'
     }
 
     try:
@@ -101,6 +101,10 @@ def download():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# actualizado
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
+   
