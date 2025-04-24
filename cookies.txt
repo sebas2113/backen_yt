@@ -24,3 +24,17 @@
 .youtube.com	TRUE	/	TRUE	1761067168	VISITOR_PRIVACY_METADATA	CgJBUhIEGgAgKg%3D%3D
 .youtube.com	TRUE	/	TRUE	1761013687	__Secure-ROLLOUT_TOKEN	CJCx3p78osuXdRDBxOSUgdGLAxik8qG-z--MAw%3D%3D
 .youtube.com	TRUE	/	TRUE	0	YSC	tJnTGJs_7QI
+__Secure-1PAPISID	2aja2nOw-UcotXMc/AzahG8n1f2_qfjCC_	.youtube.com	/	2025-10-16T00:30:37.947Z	51		✓				High	
+__Secure-1PSID	g.a000vgiDOW0V7pDaiGDbw-URqJYeEIy8r5uXjS4j_k0DKEVCXf8YOaSNTRHpKXEutVHBupzNzwACgYKAewSAQASFQHGX2MiNgH2jguXjQxS3akcMgNM8xoVAUF8yKp1wuG57ahVt4YrOsj8yK0g0076	.youtube.com	/	2025-10-16T00:30:37.947Z	167	✓	✓				High	
+__Secure-1PSIDCC	AKEyXzXFCeorv7N3fFuF4nVBfy5Dk9NQhzfdiaHM20OVBHOE4lQwPvS7Pf5F81hzXp8FyR3p5_Y	.youtube.com	/	2025-10-21T18:45:04.332Z	91	✓	✓				High	
+__Secure-1PSIDTS	sidts-CjEB7pHptY4CLFGyYdqPftb0ML8h03Kn_cJPFuggk71qxCiTdJt4kU4uVm_4U_VGt9HeEAA	.youtube.com	/	2025-10-21T18:37:23.657Z	93	✓	✓				High	
+__Secure-3PAPISID	2aja2nOw-UcotXMc/AzahG8n1f2_qfjCC_	.youtube.com	/	2025-10-16T00:30:37.947Z	51		✓	None			High	
+__Secure-3PSID	g.a000vgiDOW0V7pDaiGDbw-URqJYeEIy8r5uXjS4j_k0DKEVCXf8YcdPvoaDsvYJTj1qVFWFjmAACgYKASMSAQASFQHGX2MikOHpSGk40EtljFk0_ZyTABoVAUF8yKqIxSG0XypU0hSLoNgQHYab0076	.youtube.com	/	2025-10-16T00:30:37.947Z	167	✓	✓	None			High	
+__Secure-3PSIDCC	AKEyXzWvEMirXOGr_Oj3qmO3zGQ2xkHmwfm_PUM2maUM3vQnYgc4INa9VdrED9hmrQlsstjj3vum	.youtube.com	/	2025-10-21T18:45:04.332Z	92	✓	✓	None			High	
+__Secure-3PSIDTS	sidts-CjEB7pHptY4CLFGyYdqPftb0ML8h03Kn_cJPFuggk71qxCiTdJt4kU4uVm_4U_VGt9HeEAA	.youtube.com	/	2025-10-21T18:37:23.657Z	93	✓	✓	None			High	
+__Secure-ROLLOUT_TOKEN	CJCx3p78osuXdRDBxOSUgdGLAxik8qG-z--MAw%3D%3D	.youtube.com	/	2025-10-21T02:28:06.606Z	66	✓	✓	None	https://youtube.com		Medium	
+APISID	6zPnfFN0l1zCw8NM/AaQV3DXdmXx7mWmIY	.youtube.com	/	2025-10-16T00:30:37.947Z	40						High	
+HSID	AochofQiXKSif9Eic	.youtube.com	/	2025-10-16T00:30:37.947Z	21	✓					High	
+LOGIN_INFO	AFmmF2swRAIgBxbExMkWWEibU-5vGiYXL1W2qCYQAnfpsrCc9XtWTE8CICrTrhOa36hipDkqOtg8XHCgYWdVsSerZVFTkwiisMbf:QUQ3MjNmd3JGVmg3aEhaRlp4UTc2eEdzVmZsTUQ4WXU2OXJoMGJOSDQxc3NfQXpaczg5by1iRW9wcHBiOVBUSTFYd1oyTGJSWUdJZnBUMkswa1liRUU5aVZPdjhHVnlMLUtib3A3UVpQakZCRGJSTXpsZlBRMVp2b0RCOGVjR0YzMElVbnRSbTdaU2NRNFJFczJaTjJETWNqZGNSN0Q1YTJn	.youtube.com	/	2025-10-16T00:30:41.240Z	327	✓	✓	None			Medium	
+PREF	f4=4000000&tz=America.Buenos_Aires&f6=40000000&f7=100&f5=20000	.youtube.com	/	2025-05-01T17:30:27.802Z	66		✓				Medium	
+SAPISID	2aja2nOw-UcotXMc/AzahG8n1f2_qfjCC_	.youtube.com	/	2025-10-16T00:30:37.947Z	41		✓				High	
