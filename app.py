@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 import yt_dlp
 
 app = Flask(__name__)
-
+CORS(app) 
 # Ruta principal para confirmar que el backend funciona
 @app.route('/')
 def index():
